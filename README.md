@@ -8,3 +8,7 @@ Forthcoming:
 - timer
 - pseudo management
 - score system
+
+
+Do not forget to add the MySQL driver.
+Find it here: https://dev.mysql.com/downloads/connector/j/ (take 'Platform Independent' for Operating System.)
