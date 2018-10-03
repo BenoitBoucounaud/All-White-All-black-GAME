@@ -1,0 +1,177 @@
+﻿-- phpMyAdmin SQL Dump
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le :  mer. 03 oct. 2018 à 15:34
+-- Version du serveur :  10.1.30-MariaDB
+-- Version de PHP :  7.2.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données :  `tntb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `gamer`
+--
+
+CREATE TABLE `gamer` (
+  `id_gamer` int(11) NOT NULL,
+  `pseudo` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `gamer`
+--
+
+INSERT INTO `gamer` (`id_gamer`, `pseudo`, `created_at`) VALUES
+(1, 'Nebiot', '2018-10-03 13:33:48');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `level`
+--
+
+CREATE TABLE `level` (
+  `id_level` int(11) NOT NULL,
+  `libelle` varchar(50) NOT NULL,
+  `nbL` int(11) NOT NULL,
+  `nbC` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `level`
+--
+
+INSERT INTO `level` (`id_level`, `libelle`, `nbL`, `nbC`) VALUES
+(1, 'Easy', 3, 3),
+(2, 'Normal', 5, 5),
+(3, 'Hard', 7, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `scores`
+--
+
+CREATE TABLE `scores` (
+  `id` int(11) NOT NULL,
+  `duree_seconde` double NOT NULL,
+  `nb_click` int(11) NOT NULL,
+  `id_gamer` int(11) NOT NULL,
+  `id_level` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id_strategy` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `strategy`
+--
+
+CREATE TABLE `strategy` (
+  `id` int(11) NOT NULL,
+  `titre` varchar(50) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `strategy`
+--
+
+INSERT INTO `strategy` (`id`, `titre`, `description`) VALUES
+(1, 'normal', 'Changement de couleur en \"+\" a partir de la base.'),
+(2, 'croix', 'Changement de couleur sur toute le ligne horizontale et verticale à partir du point d\'entré.');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `gamer`
+--
+ALTER TABLE `gamer`
+  ADD PRIMARY KEY (`id_gamer`);
+
+--
+-- Index pour la table `level`
+--
+ALTER TABLE `level`
+  ADD PRIMARY KEY (`id_level`);
+
+--
+-- Index pour la table `scores`
+--
+ALTER TABLE `scores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_level` (`id_level`),
+  ADD KEY `id_strategy` (`id_strategy`) USING BTREE,
+  ADD KEY `id_gamer` (`id_gamer`);
+
+--
+-- Index pour la table `strategy`
+--
+ALTER TABLE `strategy`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `titre` (`titre`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `gamer`
+--
+ALTER TABLE `gamer`
+  MODIFY `id_gamer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `level`
+--
+ALTER TABLE `level`
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `scores`
+--
+ALTER TABLE `scores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `strategy`
+--
+ALTER TABLE `strategy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `scores`
+--
+ALTER TABLE `scores`
+  ADD CONSTRAINT `scores_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`),
+  ADD CONSTRAINT `scores_ibfk_3` FOREIGN KEY (`id_strategy`) REFERENCES `strategy` (`id`),
+  ADD CONSTRAINT `scores_ibfk_4` FOREIGN KEY (`id_gamer`) REFERENCES `gamer` (`id_gamer`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
