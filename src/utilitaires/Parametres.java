@@ -6,7 +6,7 @@ import java.util.prefs.Preferences;
 
 import frames.Jeu;
 import model.Level;
-import model.dao.LevelDAO;
+import dao.LevelDAO;
 
 public class Parametres {
 
@@ -55,6 +55,7 @@ public class Parametres {
 
 	public static void putMode(String mode, int L, int C) {
 		setPreferences();
+		
 		prefs.put(NOM_DIFF, mode);
 		prefs.putInt(NB_L_DEFAUT, L);
 		prefs.putInt(NB_C_DEFAUT, C);
@@ -75,10 +76,5 @@ public class Parametres {
 		
 	}
 
-
-	/*
-	 * On va essayer apres de mettre un timer en haut pour le lier avec le timer du
-	 * score
-	 */
 
 }

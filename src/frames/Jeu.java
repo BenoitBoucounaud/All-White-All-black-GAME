@@ -12,13 +12,14 @@ import ecrans.EcranAccueil;
 import ecrans.EcranJeu;
 import ecrans.EcranParametres;
 import ecrans.EcranScore;
+import ecrans.EcranUtilisateur;
 import ecrans.MainCard;
 import model.Gamer;
 import model.Level;
 import model.Strategy;
-import model.dao.DAO;
-import model.dao.GamerDAO;
-import model.dao.LevelDAO;
+import dao.DAO;
+import dao.GamerDAO;
+import dao.LevelDAO;
 import strategy.Regle;
 import strategy.RegleSimple;
 import utilitaires.Parametres;
@@ -32,6 +33,7 @@ public class Jeu extends JFrame {
 	private static EcranJeu ecranJeu;
 	private static EcranScore ecranScore;
 	private EcranParametres ecranParametres;
+	private static EcranUtilisateur ecranUtilisateur;
 	private static Strategy regleSimple;
 
 	private Strategy regleCroix;
@@ -50,29 +52,24 @@ public class Jeu extends JFrame {
 		Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 		cards.setBorder(padding);
 
-		DAO<Gamer> gamerDAO = new GamerDAO();
 		DAO<Level> levelDAO = new LevelDAO();
-
-		Gamer Nebiot = new Gamer("Nebiot");
-		gamerDAO.insert(Nebiot);
-
-		cache.putGamerId(GamerDAO.findByPseudo(Nebiot.getPseudo()).getId());
-		cache.putGamerPseudo(Nebiot.getPseudo());
-
 		Level defaut = new Level("normal");
 		cache.putLevelId(LevelDAO.findByLibelle(defaut.getLibelle()).getId());
 
+		// Pour montrer tous les pseudo dans la console
+		DAO<Gamer> gamerDAO = new GamerDAO();
 		List<Gamer> gamers = gamerDAO.findAll();
-
 		for (Gamer gamer : gamers) {
 			System.out.println(gamer.toString());
 		}
 
-		ScoreController.printScores();
+		// Pour montrer tous les scores dabs la console
+//		ScoreController.printScores();
 
 		ecranAccueil = new EcranAccueil(cards);
 		ecranScore = new EcranScore(cards);
 		ecranParametres = new EcranParametres(cards);
+		ecranUtilisateur = new EcranUtilisateur(cards);
 
 		ecranJeu = new EcranJeu(cards);
 		regleSimple = new RegleSimple(ecranJeu.getGrille());

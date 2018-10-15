@@ -4,21 +4,24 @@ import java.sql.Timestamp;
 
 public class Score {
 
-	private int id ;
-	private double dureeSeconde ;
-	private int nbClick ;
-	private Gamer gamer ;
-	private Level level ;
-	private int strategy ;
-	private Timestamp createdAt ;
-	
+	private int id;
+	private double dureeSeconde;
+	private int nbClick;
+	private Gamer gamer;
+	private Level level;
+	private int strategy;
+	private Timestamp createdAt;
+	private double pointsCoup;
+	private double pointsTemps;
+	private int scoreTotal;
+
 	public Score() {
-		dureeSeconde=0;
-		nbClick =0;
+		dureeSeconde = 0;
+		nbClick = 0;
 		gamer = null;
 		level = null;
 		strategy = 1;
-		createdAt = new Timestamp (System.currentTimeMillis());
+		createdAt = new Timestamp(System.currentTimeMillis());
 	}
 
 	public Score(double dureeSeconde, int nbClick, Gamer gamer, Level level, int strategy, Timestamp createdAt) {
@@ -28,6 +31,9 @@ public class Score {
 		this.level = level;
 		this.strategy = strategy;
 		this.createdAt = createdAt;
+		this.pointsCoup = 300 - nbClick;
+		this.pointsTemps = (5 * 60) - dureeSeconde;
+		this.scoreTotal = (int)(this.pointsCoup + this.pointsTemps) * level.getId()* 2;
 	}
 
 	public int getId() {
@@ -78,6 +84,14 @@ public class Score {
 		this.strategy = strategy;
 	}
 
+	public double getPointsCoup() {
+		return pointsCoup;
+	}
+
+	public double getPointsTemps() {
+		return pointsTemps;
+	}
+
 	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
@@ -85,4 +99,9 @@ public class Score {
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public double getScoreTotal() {
+		return scoreTotal;
+	}
+
 }

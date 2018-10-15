@@ -9,7 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import ecrans.EcranJeu;
 import utilitaires.Parametres;
+import utilitaires.StopWatch;
 
 public class Grille extends JPanel {
 
@@ -99,6 +101,11 @@ public class Grille extends JPanel {
 	}
 
 	public void reset() {
+		
+		EcranJeu.chrono.stop();
+		EcranJeu.chrono = new StopWatch();
+		EcranJeu.chrono.start();
+		
 		for (int i = 0; i < cases.length; i++) {
 			for (int j = 0; j < cases[0].length; j++) {
 				cases[i][j].setBackground(Parametres.COULEUR_DEB);
@@ -112,6 +119,11 @@ public class Grille extends JPanel {
 	}
 
 	public void forTheWin() {
+		
+		EcranJeu.chrono.stop();
+		System.out.println(EcranJeu.chrono.toString());
+		
+		
 		for (int i = 0; i < cases.length; i++) {
 			for (int j = 0; j < cases[0].length; j++) {
 				cases[i][j].setBackground(Parametres.COULEUR_DEB);

@@ -6,22 +6,31 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import controllers.ScoreController;
+import dao.DAO;
+import dao.GamerDAO;
+import ecrans.EcranJeu;
 import frames.Jeu;
 import graphique.Case;
 import graphique.Grille;
+import model.Gamer;
+import model.Score;
 import model.Strategy;
 import utilitaires.Parametres;
+import utilitaires.SystemeCache;
 
 public class RegleSimple extends Strategy {
 
 	private Grille grille;
+	private String savedPseudo = "";
+	public static SystemeCache cache = new SystemeCache();
 
 	public RegleSimple() {
-		
+
 	}
-	
+
 	public RegleSimple(Grille grille) {
 		this.grille = grille;
 		Jeu.cache.putStrategyId(1);
@@ -61,15 +70,30 @@ public class RegleSimple extends Strategy {
 
 			if (isDone(grille)) {
 				grille.forTheWin();
-				// On peux essayer de rajouter une image en icone
-				ImageIcon ImageIcon = new ImageIcon(Parametres.IMAGE_WIN);
-				JOptionPane
-						.showMessageDialog(null,
-								new JLabel("Dans le mille!! Tu a réussis en " + Grille.compteurCoup + " coups.",
-										ImageIcon, JLabel.RIGHT),
-								"C'est une victoire", JOptionPane.INFORMATION_MESSAGE);
-				ScoreController.addNewScore(313);
-				// Modifier le 313 pour avoir un vrai temps, donc rajouter un timer
+
+				/*
+				 * Pour gérer le dialogue:
+				 * https://imss-www.upmf-grenoble.fr/prevert/Prog/Java/swing/JOptionPane.html
+				 * https://docs.oracle.com/javase/7/docs/api/javax/swing/JOptionPane.html
+				 * http://www.iro.umontreal.ca/~dift1170/A09/docPDF/chapit11.pdf
+				 */
+
+				savedPseudo = (String) JOptionPane.showInputDialog(null,
+						("Dans le mille!! Tu a réussis en " + Grille.compteurCoup + " coups et "
+								+ EcranJeu.chrono.toString() + "." + "\n" + "Entrez votre pseudo: "),
+						"C'est une victoire", JOptionPane.QUESTION_MESSAGE, new ImageIcon(Parametres.IMAGE_WIN), null,
+						"Pseudo");
+				;
+
+				// Pour ajouter le pseudo
+				DAO<Gamer> gamerDAO = new GamerDAO();
+				Gamer enteredPseudo = new Gamer(savedPseudo);
+				gamerDAO.insert(enteredPseudo);
+
+				cache.putGamerId(GamerDAO.findByPseudo(enteredPseudo.getPseudo()).getId());
+				cache.putGamerPseudo(enteredPseudo.getPseudo());
+
+				ScoreController.addNewScore();
 
 			} else {
 				Grille.compteurCoup++;

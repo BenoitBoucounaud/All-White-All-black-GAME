@@ -3,15 +3,16 @@ package controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
+import dao.DAO;
+import dao.GamerDAO;
+import dao.LevelDAO;
+import dao.ScoreDAO;
+import ecrans.EcranJeu;
 import frames.Jeu;
 import graphique.Grille;
 import model.Gamer;
 import model.Level;
 import model.Score;
-import model.dao.DAO;
-import model.dao.GamerDAO;
-import model.dao.LevelDAO;
-import model.dao.ScoreDAO;
 
 public class ScoreController extends Controllers {
 
@@ -19,8 +20,9 @@ public class ScoreController extends Controllers {
 	private static DAO<Gamer> gamerDAO = new GamerDAO();
 	private static DAO<Level> levelDAO =new LevelDAO();
 	
-	public static void addNewScore(double duree) {
-		Score score = new Score(duree,
+	public static void addNewScore() {
+		Score score = new Score(
+				EcranJeu.chrono.elapsed(),
 				Grille.compteurCoup,
 				gamerDAO.findById(Jeu.cache.getGamerId()), 
 				levelDAO.findById(Jeu.cache.getLevelId()),
@@ -41,7 +43,7 @@ public class ScoreController extends Controllers {
 
 	public static void printScores() {
 		for(Score score : scoreDAO.findAll()) {
-			System.out.println(score.getGamer().getPseudo() + " ; " + score.getNbClick() + " ; " + score.getDureeSeconde() + " ; " + score.getLevel().getLibelle() + " ; " + score.getStrategy() + " ; " + score.getCreatedAt());
+			System.out.println(score.getGamer().getPseudo() + " ; " + score.getNbClick() + " ; " + score.getDureeSeconde() + " ; " + score.getLevel().getLibelle() + " ; " + score.getStrategy() + " ; " + score.getCreatedAt() + " ; " + score.getScoreTotal());
 		}
 			
 	}

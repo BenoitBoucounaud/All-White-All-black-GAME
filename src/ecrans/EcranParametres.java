@@ -6,20 +6,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import model.Gamer;
-import model.Level;
-import model.dao.DAO;
-import model.dao.GamerDAO;
-import model.dao.LevelDAO;
-import sun.plugin2.message.GetAppletMessage;
 import utilitaires.Parametres;
 
 public class EcranParametres extends Ecran {

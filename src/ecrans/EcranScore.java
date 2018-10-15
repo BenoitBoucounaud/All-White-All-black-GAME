@@ -22,7 +22,7 @@ public class EcranScore extends Ecran{
 	private JButton retour ;
 	private JTable table ;	
 	private JLabel title ;
-	private String[] columnNames = {"Pseudo","NB Click","Durée S","Level", "Strategy", "Date"};
+	private String[] columnNames = {"Pseudo","NB Click","Durée S","Level", "Strategy", "Score Final", "Date"};
 	DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
 	public EcranScore(MainCard mainCard) {
@@ -43,7 +43,14 @@ public class EcranScore extends Ecran{
 		table = new JTable(tableModel) ;
 
 		for(Score score : ScoreController.getAllScores()) {
-			Object [] row = {score.getGamer().getPseudo(), score.getNbClick(), score.getDureeSeconde(), score.getLevel().getLibelle(), score.getStrategy(), score.getCreatedAt()} ;
+			Object [] row = {
+					score.getGamer().getPseudo(),
+					score.getNbClick(),
+					score.getDureeSeconde(), 
+					score.getLevel().getLibelle(),
+					score.getStrategy(), 
+					score.getScoreTotal(), 
+					score.getCreatedAt()} ;
 			tableModel.addRow(row);
 		}
 

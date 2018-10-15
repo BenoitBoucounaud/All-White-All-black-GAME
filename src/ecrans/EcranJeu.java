@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import graphique.Grille;
+import utilitaires.StopWatch;
 
 public class EcranJeu extends Ecran {
 
@@ -15,6 +16,7 @@ public class EcranJeu extends Ecran {
 	private JButton reset;
 	private JButton retour;
 	private Grille grille;
+	public static StopWatch chrono;
 
 	public EcranJeu(MainCard mainCard) {
 		this.mainCard = mainCard;
@@ -31,6 +33,9 @@ public class EcranJeu extends Ecran {
 	private void build(Grille grille) {
 		this.grille = grille;
 
+		chrono = new StopWatch();
+		chrono.start();
+		
 		reset = new JButton("RESET");
 		retour = new JButton("PRECEDENT");
 		setLayout(new BorderLayout());

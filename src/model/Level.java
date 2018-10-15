@@ -3,7 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.dao.LevelDAO;
+import dao.LevelDAO;
 
 public class Level {
 

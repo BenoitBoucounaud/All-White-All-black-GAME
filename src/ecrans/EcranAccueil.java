@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import graphique.Grille;
 import utilitaires.Parametres;
 
 public class EcranAccueil extends Ecran {
@@ -22,6 +21,7 @@ public class EcranAccueil extends Ecran {
 	private JButton btJouer;
 	private JButton btScores;
 	private JButton btParametres;
+	private JButton btUtilisateur;
 	private JButton btAPropos;
 	private MainCard mainCard;
 	private JLabel titreJeu;
@@ -44,6 +44,7 @@ public class EcranAccueil extends Ecran {
 		btJouer = new JButton("Jouer");
 		btScores = new JButton("Scores");
 		btParametres = new JButton("Parametres");
+		btUtilisateur = new JButton("Utilisateur");
 		btAPropos = new JButton("A Propos");
 		addListener();
 
@@ -56,6 +57,7 @@ public class EcranAccueil extends Ecran {
 		center.add(btJouer);
 		center.add(btScores);
 		center.add(btParametres);
+		center.add(btUtilisateur);
 		center.add(btAPropos);
 
 		add(titreJeu, BorderLayout.NORTH);
@@ -90,6 +92,16 @@ public class EcranAccueil extends Ecran {
 
 			}
 		});
+		
+		btUtilisateur.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainCard.showEcranUtilisateur();
+
+			}
+		});
+		
 	}
 
 }

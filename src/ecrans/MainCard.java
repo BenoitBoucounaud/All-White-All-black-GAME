@@ -14,6 +14,7 @@ public class MainCard extends JPanel {
 	public final static String NOM_ACCUEIL = "ecranAccueil";
 	public final static String ECRAN_PARAMETRES = "ecranPara";
 	public final static String ECRAN_SCORE = "ecranScore";
+	public final static String ECRAN_UTILISATEUR = "ecranUtilisateur";
 
 	private static CardLayout layout = new CardLayout();
 
@@ -39,4 +40,8 @@ public class MainCard extends JPanel {
 		layout.show(this, ECRAN_SCORE);
 	}
 
+	public void showEcranUtilisateur() {
+		layout.show(this, ECRAN_UTILISATEUR);
+	}
+	
 }
